@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Google</title>
+  <link rel="icon" href="https://www.google.com/favicon.ico" />
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Google Sans', Roboto, Arial, sans-serif;
+      font-size: 14px;
+      background: #fff;
+      color: #202124;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      text-decoration: none;
+      color: #202124;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* ── DARK MODE ── */
+    body.dark-mode {
+      background: #202124;
+      color: #e8eaed;
+    }
+
+    body.dark-mode a {
+      color: #e8eaed;
+    }
+
+    body.dark-mode .search-box {
+      background: #303134;
+      border-color: #5f6368;
+    }
+
+    body.dark-mode .search-box:hover,
+    body.dark-mode .search-box.focused {
+      background: #303134;
+      border-color: transparent;
+    }
+
+    body.dark-mode .search-input {
+      color: #e8eaed;
+    }
+
+    body.dark-mode .search-icon svg {
+      fill: #9aa0a6;
+    }
+
+    body.dark-mode .icon-btn:hover {
+      background: #3c4043;
+    }
+
+    body.dark-mode .divider-v {
+      background: #5f6368;
+    }
+
+    body.dark-mode .suggestions {
+      background: #303134;
+    }
+
+    body.dark-mode .suggestion-item {
+      color: #e8eaed;
+    }
+
+    body.dark-mode .suggestion-item:hover,
+    body.dark-mode .suggestion-item.kb-selected {
+      background: #3c4043;
+    }
+
+    body.dark-mode .suggestion-divider {
+      background: #5f6368;
+    }
+
+    body.dark-mode .search-btn {
+      background: #303134;
+      border-color: #303134;
+      color: #e8eaed;
+    }
+
+    body.dark-mode .search-btn:hover {
+      border-color: #5f6368;
+    }
+
+    body.dark-mode .language-section {
+      color: #9aa0a6;
+    }
+
+    body.dark-mode .language-section a {
+      color: #8ab4f8;
+    }
+
+    body.dark-mode footer {
+      background: #171717;
+      color: #9aa0a6;
+    }
+
+    body.dark-mode .footer-country {
+      border-bottom-color: #3c4043;
+    }
+
+    body.dark-mode .footer-links a {
+      color: #9aa0a6;
+    }
+
+    body.dark-mode .top-nav .grid-icon:hover {
+      background: #3c4043;
+    }
+
+    body.dark-mode .sign-in-btn {
+      background: #8ab4f8;
+      color: #202124 !important;
+    }
+
+    body.dark-mode .sign-in-btn:hover {
+      background: #aecbfa;
+    }
+
+    body.dark-mode .account-menu,
+    body.dark-mode .auth-card {
+      background: #2b2c2f;
+      border-color: #3c4043;
+      color: #e8eaed;
+    }
+
+    body.dark-mode .account-email,
+    body.dark-mode .auth-subtitle,
+    body.dark-mode .field-label {
+      color: #bdc1c6;
+    }
+
+    body.dark-mode .auth-input {
+      background: #202124;
+      border-color: #5f6368;
+      color: #e8eaed;
+    }
+
+    body.dark-mode .menu-btn:hover,
+    body.dark-mode .auth-cancel:hover {
+      background: #3c4043;
+    }
+
+    /* ── TOP NAVIGATION ── */
+    .top-nav {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 14px 20px;
+      gap: 20px;
+    }
+
+    /* ── CLOCK WIDGET ── */
+    .clock-widget {
+      font-size: 13px;
+      color: #5f6368;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.3px;
+      margin-right: auto;
+      padding-left: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      user-select: none;
+    }
+
+    .clock-widget svg {
+      width: 16px;
+      height: 16px;
+      fill: #5f6368;
+    }
+
+    body.dark-mode .clock-widget {
+      color: #9aa0a6;
+    }
+
+    body.dark-mode .clock-widget svg {
+      fill: #9aa0a6;
+    }
+
+    /* ── DARK MODE TOGGLE ── */
+    .dark-toggle {
+      background: none;
+      border: 1px solid #dadce0;
+      cursor: pointer;
+      padding: 7px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, border-color 0.2s, transform 0.3s;
+    }
+
+    .dark-toggle:hover {
+      background: #f1f3f4;
+      transform: rotate(30deg);
+    }
+
+    .dark-toggle svg {
+      width: 18px;
+      height: 18px;
+      fill: #5f6368;
+      transition: fill 0.2s;
+    }
+
+    body.dark-mode .dark-toggle {
+      border-color: #5f6368;
+    }
+
+    body.dark-mode .dark-toggle:hover {
+      background: #3c4043;
+    }
+
+    body.dark-mode .dark-toggle svg {
+      fill: #fdd663;
+    }
+
+    .top-nav a {
+      font-size: 13px;
+      color: #202124;
+    }
+
+    .top-nav .grid-icon {
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .top-nav .grid-icon:hover {
+      background: #f1f3f4;
+    }
+
+    .top-nav .grid-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: #5f6368;
+    }
+
+    .sign-in-btn {
+      background: #1a73e8;
+      color: #fff !important;
+      padding: 9px 18px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none !important;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+
+    .sign-in-btn:hover {
+      background: #1557b0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      text-decoration: none !important;
+    }
+
+    .account-wrap {
+      position: relative;
+    }
+
+    .avatar-btn {
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 50%;
+      background: #1a73e8;
+      color: #fff;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 600;
+      box-shadow: 0 1px 2px rgba(60,64,67,0.3);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .avatar-btn.visible {
+      display: flex;
+      animation: avatar-pop 0.35s cubic-bezier(.34,1.56,.64,1);
+    }
+
+    .avatar-btn:hover {
+      box-shadow: 0 2px 8px rgba(60,64,67,0.35);
+      transform: translateY(-1px);
+    }
+
+    .account-menu {
+      position: absolute;
+      top: 46px;
+      right: 0;
+      width: 260px;
+      padding: 16px;
+      background: #fff;
+      border: 1px solid #dadce0;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(60,64,67,0.24);
+      display: none;
+      z-index: 300;
+      transform-origin: top right;
+    }
+
+    .account-menu.visible {
+      display: block;
+      animation: menu-in 0.22s ease-out;
+    }
+
+    .account-name {
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .account-email {
+      color: #5f6368;
+      font-size: 13px;
+      margin-bottom: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    .menu-btn {
+      width: 100%;
+      border: 1px solid #dadce0;
+      background: transparent;
+      color: inherit;
+      border-radius: 18px;
+      padding: 9px 14px;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 500;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .menu-btn:hover {
+      background: #f8fafd;
+      border-color: #c9d7f2;
+    }
+
+    .auth-overlay {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(32,33,36,0.32);
+      z-index: 500;
+    }
+
+    .auth-overlay.visible {
+      display: flex;
+      animation: fade-in 0.18s ease-out;
+    }
+
+    .auth-card {
+      width: min(420px, 100%);
+      background: #fff;
+      color: #202124;
+      border: 1px solid #dadce0;
+      border-radius: 8px;
+      padding: 28px;
+      box-shadow: 0 16px 40px rgba(60,64,67,0.28);
+      animation: auth-rise 0.28s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .auth-logo {
+      display: flex;
+      font-size: 32px;
+      line-height: 1;
+      margin-bottom: 18px;
+      letter-spacing: -1px;
+    }
+
+    .auth-logo span {
+      animation: letter-bounce 0.7s cubic-bezier(.34,1.56,.64,1) both;
+    }
+
+    .auth-logo span:nth-child(2) { animation-delay: 0.04s; }
+    .auth-logo span:nth-child(3) { animation-delay: 0.08s; }
+    .auth-logo span:nth-child(4) { animation-delay: 0.12s; }
+    .auth-logo span:nth-child(5) { animation-delay: 0.16s; }
+    .auth-logo span:nth-child(6) { animation-delay: 0.2s; }
+
+    .auth-title {
+      font-size: 24px;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+
+    .auth-subtitle {
+      color: #5f6368;
+      margin-bottom: 22px;
+    }
+
+    .field-label {
+      display: block;
+      color: #5f6368;
+      font-size: 12px;
+      margin: 14px 0 6px;
+    }
+
+    .auth-input {
+      width: 100%;
+      border: 1px solid #dadce0;
+      border-radius: 4px;
+      padding: 12px;
+      font: inherit;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .auth-input:focus {
+      border-color: #1a73e8;
+      box-shadow: 0 0 0 3px rgba(26,115,232,0.14);
+    }
+
+    .auth-error {
+      min-height: 18px;
+      margin-top: 10px;
+      color: #d93025;
+      font-size: 13px;
+    }
+
+    .auth-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .auth-cancel,
+    .auth-submit {
+      border: none;
+      border-radius: 4px;
+      padding: 10px 18px;
+      font: inherit;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+
+    .auth-cancel {
+      background: transparent;
+      color: #1a73e8;
+    }
+
+    .auth-cancel:hover {
+      background: #f1f3f4;
+    }
+
+    .auth-submit {
+      background: #1a73e8;
+      color: #fff;
+    }
+
+    .auth-submit:hover {
+      background: #1557b0;
+      box-shadow: 0 1px 3px rgba(60,64,67,0.35);
+      transform: translateY(-1px);
+    }
+
+    /* ── MAIN CENTER SECTION ── */
+    .main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      padding: 0 20px 60px;
+    }
+
+    /* ── GOOGLE LOGO ── */
+    .logo {
+      display: flex;
+      align-items: center;
+      margin-bottom: 28px;
+      user-select: none;
+    }
+
+    .logo span {
+      font-size: 74px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -2px;
+      display: inline-block;
+      transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), opacity 0.2s;
+      cursor: default;
+    }
+
+    .logo span:hover {
+      transform: scale(1.25) rotate(-8deg) translateY(-6px);
+    }
+
+    .logo .g1 { color: #4285F4; }
+    .logo .g2 { color: #EA4335; }
+    .logo .g3 { color: #FBBC05; }
+    .logo .g4 { color: #4285F4; }
+    .logo .g5 { color: #34A853; }
+    .logo .g6 { color: #EA4335; }
+
+    .auth-logo .g1 { color: #4285F4; }
+    .auth-logo .g2 { color: #EA4335; }
+    .auth-logo .g3 { color: #FBBC05; }
+    .auth-logo .g4 { color: #4285F4; }
+    .auth-logo .g5 { color: #34A853; }
+    .auth-logo .g6 { color: #EA4335; }
+
+    /* ── SEARCH CONTAINER ── */
+    .search-container {
+      width: 100%;
+      max-width: 584px;
+      position: relative;
+    }
+
+    /* ── SEARCH BOX ── */
+    .search-box {
+      display: flex;
+      align-items: center;
+      border: 1px solid #dfe1e5;
+      border-radius: 24px;
+      padding: 0 14px;
+      height: 46px;
+      gap: 10px;
+      background: #fff;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .search-box:hover {
+      box-shadow: 0 1px 6px rgba(32,33,36,0.28);
+      border-color: rgba(223,225,229,0);
+    }
+
+    .search-box.focused {
+      box-shadow: 0 1px 6px rgba(32,33,36,0.28);
+      border-color: rgba(223,225,229,0);
+      border-radius: 24px 24px 0 0;
+    }
+
+    .search-box.focused.no-suggestions {
+      border-radius: 24px;
+    }
+
+    .search-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: #9aa0a6;
+      flex-shrink: 0;
+    }
+
+    .search-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      font-family: inherit;
+      color: #202124;
+      background: transparent;
+      caret-color: #4285f4;
+    }
+
+    .search-input::placeholder {
+      color: transparent;
+    }
+
+    /* ── CLEAR BUTTON ── */
+    .clear-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+
+    .clear-btn.visible {
+      display: flex;
+    }
+
+    .clear-btn:hover {
+      background: #f1f3f4;
+    }
+
+    body.dark-mode .clear-btn:hover {
+      background: #3c4043;
+    }
+
+    .clear-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: #70757a;
+    }
+
+    .icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+
+    .icon-btn:hover {
+      background: #f1f3f4;
+    }
+
+    .icon-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .divider-v {
+      width: 1px;
+      height: 24px;
+      background: #dfe1e5;
+      flex-shrink: 0;
+    }
+
+    /* ── SUGGESTIONS DROPDOWN ── */
+    .suggestions {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1px solid rgba(223,225,229,0);
+      border-top: none;
+      border-radius: 0 0 24px 24px;
+      box-shadow: 0 4px 6px rgba(32,33,36,0.28);
+      overflow: hidden;
+      z-index: 100;
+    }
+
+    .suggestions.visible {
+      display: block;
+    }
+
+    .suggestion-divider {
+      height: 1px;
+      background: #e8eaed;
+      margin: 4px 14px;
+    }
+
+    .suggestion-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #202124;
+      transition: background 0.1s;
+    }
+
+    .suggestion-item:hover {
+      background: #f8f9fa;
+    }
+
+    .suggestion-item:last-child {
+      padding-bottom: 14px;
+    }
+
+    .suggestion-item svg {
+      width: 18px;
+      height: 18px;
+      fill: #9aa0a6;
+      flex-shrink: 0;
+    }
+
+    .suggestion-item .suggestion-text {
+      flex: 1;
+    }
+
+    .suggestion-item .suggestion-text b {
+      font-weight: 400;
+    }
+
+    .suggestion-item .suggestion-text em {
+      font-style: normal;
+      font-weight: 500;
+    }
+
+    .suggestion-item .arrow-icon {
+      opacity: 0;
+      transition: opacity 0.1s;
+    }
+
+    .suggestion-item:hover .arrow-icon,
+    .suggestion-item.kb-selected .arrow-icon {
+      opacity: 1;
+    }
+
+    .suggestion-item.kb-selected {
+      background: #f8f9fa;
+    }
+
+    /* ── SEARCH BUTTONS ── */
+    .search-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 26px;
+      justify-content: center;
+    }
+
+    .search-btn {
+      background: #f8f9fa;
+      border: 1px solid #f8f9fa;
+      border-radius: 4px;
+      padding: 0 16px;
+      height: 36px;
+      font-size: 14px;
+      font-family: inherit;
+      color: #3c4043;
+      cursor: pointer;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .search-btn:hover {
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      border-color: #dadce0;
+    }
+
+    /* ── LANGUAGE SELECTOR ── */
+    .language-section {
+      margin-top: 26px;
+      font-size: 13px;
+      color: #202124;
+    }
+
+    .language-section a {
+      color: #1a0dab;
+      margin: 0 4px;
+      font-size: 13px;
+    }
+
+    .language-section a:hover {
+      text-decoration: underline;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #f2f2f2;
+      color: #70757a;
+      font-size: 14px;
+    }
+
+    .footer-country {
+      padding: 14px 24px;
+      border-bottom: 1px solid #dadce0;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 12px 24px;
+      gap: 8px;
+    }
+
+    .footer-group {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: #70757a;
+      font-size: 14px;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    .main {
+      animation: page-rise 0.55s ease-out both;
+    }
+
+    .search-box:focus-within {
+      animation: google-glow 1.4s ease-in-out infinite alternate;
+    }
+
+    .search-btn:active,
+    .sign-in-btn:active,
+    .menu-btn:active,
+    .avatar-btn:active {
+      transform: scale(0.97);
+    }
+
+    @keyframes page-rise {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes google-glow {
+      from {
+        box-shadow: 0 1px 6px rgba(32,33,36,0.22);
+      }
+      to {
+        box-shadow:
+          0 1px 6px rgba(32,33,36,0.22),
+          0 0 0 3px rgba(66,133,244,0.08);
+      }
+    }
+
+    @keyframes fade-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes auth-rise {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes menu-in {
+      from {
+        opacity: 0;
+        transform: translateY(-6px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes avatar-pop {
+      from {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes letter-bounce {
+      0% {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      60% {
+        opacity: 1;
+        transform: translateY(-4px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAVIGATION -->
+  <nav class="top-nav">
+    <!-- Clock Widget -->
+    <div class="clock-widget" id="clockWidget">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <span id="clockTime">--:--:--</span>
+    </div>
+
+    <a href="#">Gmail</a>
+    <a href="#">Images</a>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-toggle" id="darkToggle" title="Toggle dark mode">
+      <svg id="darkIcon" viewBox="0 0 24 24">
+        <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8A9.04 9.04 0 0 0 12 3z"/>
+      </svg>
+    </button>
+
+    <!-- Google Apps Grid Icon -->
+    <div class="grid-icon" title="Google apps">
+      <svg viewBox="0 0 24 24">
+        <path d="M6 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm6 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm6 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM6 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm6 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm6 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM6 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm6 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm6 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+      </svg>
+    </div>
+
+    <a href="#" class="sign-in-btn" id="signInBtn">Sign in</a>
+    <div class="account-wrap" id="accountWrap">
+      <button class="avatar-btn" id="avatarBtn" aria-label="Google Account"></button>
+      <div class="account-menu" id="accountMenu" aria-live="polite">
+        <div class="account-name" id="accountName"></div>
+        <div class="account-email" id="accountEmail"></div>
+        <button class="menu-btn" id="signOutBtn">Sign out</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="auth-overlay" id="authOverlay" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <form class="auth-card" id="authForm">
+      <div class="auth-logo" aria-label="Google">
+        <span class="g1">G</span>
+        <span class="g2">o</span>
+        <span class="g3">o</span>
+        <span class="g4">g</span>
+        <span class="g5">l</span>
+        <span class="g6">e</span>
+      </div>
+      <h1 class="auth-title" id="authTitle">Sign in</h1>
+      <p class="auth-subtitle">Use a demo account for this page</p>
+
+      <label class="field-label" for="authName">Name</label>
+      <input class="auth-input" id="authName" type="text" autocomplete="name" placeholder="Your name" />
+
+      <label class="field-label" for="authEmail">Email</label>
+      <input class="auth-input" id="authEmail" type="text" inputmode="email" autocomplete="email" placeholder="you@example.com" />
+
+      <div class="auth-error" id="authError"></div>
+      <div class="auth-actions">
+        <button class="auth-cancel" id="authCancel" type="button">Cancel</button>
+        <button class="auth-submit" type="submit">Next</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- LOGO -->
+    <div class="logo" aria-label="Google">
+      <span class="g1">G</span>
+      <span class="g2">o</span>
+      <span class="g3">o</span>
+      <span class="g4">g</span>
+      <span class="g5">l</span>
+      <span class="g6">e</span>
+    </div>
+
+    <!-- SEARCH BAR -->
+    <div class="search-container">
+      <div class="search-box" id="searchBox">
+
+        <!-- Search Icon -->
+        <span class="search-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20.49 19l-5.73-5.73A7.9 7.9 0 0 0 16 9a7 7 0 1 0-7 7 7.9 7.9 0 0 0 4.27-1.24L19 20.49 20.49 19zM4 9a5 5 0 1 1 5 5A5 5 0 0 1 4 9z"/>
+          </svg>
+        </span>
+
+        <!-- Input -->
+        <input
+          type="text"
+          id="searchInput"
+          class="search-input"
+          autocomplete="off"
+          spellcheck="false"
+          aria-label="Search"
+          placeholder="Search Google or type a URL"
+        />
+
+        <!-- Clear Button -->
+        <button class="clear-btn" id="clearBtn" title="Clear">
+          <svg viewBox="0 0 24 24"><path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7A1 1 0 0 0 5.7 7.11L10.59 12 5.7 16.89a1 1 0 1 0 1.41 1.41L12 13.41l4.89 4.89a1 1 0 0 0 1.41-1.41L13.41 12l4.89-4.89a1 1 0 0 0 0-1.4z"/></svg>
+        </button>
+
+        <!-- Divider -->
+        <div class="divider-v"></div>
+
+        <!-- Voice Search -->
+        <button class="icon-btn" title="Search by voice" onclick="alert('Voice search not available in this demo')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#4285F4" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+            <rect x="9" y="2" width="6" height="13" rx="3"/>
+            <path d="M5 10a7 7 0 0 0 14 0"/>
+            <line x1="12" y1="19" x2="12" y2="22"/>
+            <line x1="9" y1="22" x2="15" y2="22"/>
+          </svg>
+        </button>
+
+        <!-- Image Search -->
+        <button class="icon-btn" title="Search by image" onclick="alert('Image search not available in this demo')">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.5 9.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" fill="#34A853"/>
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M6 4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H6ZM5 18l4.293-4.293a1 1 0 0 1 1.414 0L12 15l3.293-3.293a1 1 0 0 1 1.414 0L20 15.5V18H5Z"
+              fill="#4285F4" opacity="0.8"/>
+          </svg>
+        </button>
+
+      </div>
+
+      <!-- SUGGESTIONS DROPDOWN -->
+      <div class="suggestions" id="suggestions"></div>
+    </div>
+
+    <!-- SEARCH BUTTONS -->
+    <div class="search-buttons">
+      <button class="search-btn" onclick="doSearch()">Google Search</button>
+      <button class="search-btn" onclick="feelingLucky()">I'm Feeling Lucky</button>
+    </div>
+
+    <!-- LANGUAGE SECTION -->
+    <div class="language-section">
+      Google offered in:
+      <a href="#">हिन्दी</a>
+      <a href="#">বাংলা</a>
+      <a href="#">తెలుగు</a>
+      <a href="#">मराठी</a>
+      <a href="#">தமிழ்</a>
+      <a href="#">ગુજરાતી</a>
+      <a href="#">ಕನ್ನಡ</a>
+      <a href="#">മലയാളം</a>
+      <a href="#">ਪੰਜਾਬੀ</a>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-country">India</div>
+    <div class="footer-links">
+      <div class="footer-group">
+        <a href="#">About</a>
+        <a href="#">Advertising</a>
+        <a href="#">Business</a>
+        <a href="#">How Search works</a>
+      </div>
+      <div class="footer-group">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Settings</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Suggestion data ──
+    const suggestionMap = {
+      a: ['amazon', 'airbnb', 'apple', 'anthropic ai', 'adobe'],
+      b: ['bbc news', 'bing', 'bitcoin price today', 'bollywood movies 2026'],
+      c: ['claude ai', 'chatgpt', 'cricket score today', 'css tutorial'],
+      d: ['discord', 'dropbox', 'django tutorial', 'data science course'],
+      e: ['email login', 'ebay', 'excel tutorial', 'espn'],
+      f: ['facebook', 'flipkart', 'figma', 'frontend development tutorial'],
+      g: ['gmail', 'google maps', 'github', 'google translate', 'google drive'],
+      h: ['html tutorial for beginners', 'hotstar', 'hackerrank', 'how to learn javascript'],
+      i: ['instagram', 'ipl 2026 schedule', 'income tax india', 'irctc'],
+      j: ['javascript tutorial', 'jio plans', 'java programming', 'jupyter notebook'],
+      k: ['khan academy', 'kotlin tutorial', 'kfc near me', 'kubernetes'],
+      l: ['linkedin', 'leetcode', 'laravel', 'linux commands'],
+      m: ['maps', 'microsoft', 'myntra', 'mongodb tutorial'],
+      n: ['netflix india', 'nodejs tutorial', 'nba scores', 'numpy python'],
+      o: ['openai', 'ola cabs', 'oracle java', 'openstreetmap'],
+      p: ['python tutorial', 'paytm', 'pinterest', 'photoshop free'],
+      q: ['quora', 'qatar airways', 'quick css tricks', 'quizlet'],
+      r: ['react js tutorial', 'reddit', 'roblox', 'railway pnr status'],
+      s: ['swiggy', 'stackoverflow', 'spotify', 'snapchat', 'swift programming'],
+      t: ['twitter x', 'tailwind css', 'typeform', 'typescript tutorial'],
+      u: ['udemy courses', 'upi payment', 'ubuntu download', 'unsplash'],
+      v: ['vue js', 'vscode download', 'vmware', 'vite js'],
+      w: ['whatsapp web', 'weather today indore', 'wikipedia', 'web development roadmap'],
+      x: ['xbox games', 'xml tutorial', 'xampp download'],
+      y: ['youtube', 'yahoo mail', 'youtube music', 'yarn package manager'],
+      z: ['zomato', 'zoom meeting', 'zustand react', 'zapier'],
+    };
+
+    const searchIcon = `<svg viewBox="0 0 24 24" fill="#9aa0a6" width="18" height="18"><path d="M20.49 19l-5.73-5.73A7.9 7.9 0 0 0 16 9a7 7 0 1 0-7 7 7.9 7.9 0 0 0 4.27-1.24L19 20.49 20.49 19zM4 9a5 5 0 1 1 5 5A5 5 0 0 1 4 9z"/></svg>`;
+    const arrowIcon = `<svg class="arrow-icon" viewBox="0 0 24 24" fill="#9aa0a6" width="18" height="18"><path d="M6.4 18.65 5 17.25l9.25-9.25H6.5V6.35h11.15V17.5H16V9.75Z"/></svg>`;
+
+    const input = document.getElementById('searchInput');
+    const box = document.getElementById('searchBox');
+    const suggestionsEl = document.getElementById('suggestions');
+    const clearBtn = document.getElementById('clearBtn');
+    const signInBtn = document.getElementById('signInBtn');
+    const avatarBtn = document.getElementById('avatarBtn');
+    const accountMenu = document.getElementById('accountMenu');
+    const accountName = document.getElementById('accountName');
+    const accountEmail = document.getElementById('accountEmail');
+    const signOutBtn = document.getElementById('signOutBtn');
+    const authOverlay = document.getElementById('authOverlay');
+    const authForm = document.getElementById('authForm');
+    const authName = document.getElementById('authName');
+    const authEmail = document.getElementById('authEmail');
+    const authError = document.getElementById('authError');
+    const authCancel = document.getElementById('authCancel');
+    const accountStorageKey = 'google-clone-account';
+
+    // ── Keyboard navigation state ──
+    let kbIndex = -1;
+    let currentItems = [];
+
+    function readAccount() {
+      try {
+        return JSON.parse(localStorage.getItem(accountStorageKey));
+      } catch (error) {
+        localStorage.removeItem(accountStorageKey);
+        return null;
+      }
+    }
+
+    function getInitials(name, email) {
+      const source = (name || email || 'G').trim();
+      const parts = source.split(/\s+/).filter(Boolean);
+      if (parts.length > 1) {
+        return (parts[0][0] + parts[1][0]).toUpperCase();
+      }
+      return source[0].toUpperCase();
+    }
+
+    function renderAccount() {
+      const account = readAccount();
+      const isSignedIn = Boolean(account && account.email);
+
+      signInBtn.style.display = isSignedIn ? 'none' : 'inline-block';
+      avatarBtn.classList.toggle('visible', isSignedIn);
+      accountMenu.classList.remove('visible');
+
+      if (!isSignedIn) {
+        avatarBtn.textContent = '';
+        accountName.textContent = '';
+        accountEmail.textContent = '';
+        return;
+      }
+
+      avatarBtn.textContent = getInitials(account.name, account.email);
+      accountName.textContent = account.name || 'Google User';
+      accountEmail.textContent = account.email;
+    }
+
+    function openAuth() {
+      const account = readAccount();
+      authName.value = account?.name || '';
+      authEmail.value = account?.email || '';
+      authError.textContent = '';
+      authOverlay.classList.add('visible');
+      setTimeout(() => (authName.value ? authEmail : authName).focus(), 50);
+    }
+
+    function closeAuth() {
+      authOverlay.classList.remove('visible');
+      authError.textContent = '';
+    }
+
+    function saveAccount(event) {
+      event.preventDefault();
+      const name = authName.value.trim();
+      const email = authEmail.value.trim();
+
+      if (!name || !email) {
+        authError.textContent = 'Enter both name and email.';
+        return;
+      }
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        authError.textContent = 'Enter a valid email address.';
+        return;
+      }
+
+      localStorage.setItem(accountStorageKey, JSON.stringify({ name, email }));
+      closeAuth();
+      renderAccount();
+    }
+
+    signInBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+      openAuth();
+    });
+
+    avatarBtn.addEventListener('click', () => {
+      accountMenu.classList.toggle('visible');
+    });
+
+    signOutBtn.addEventListener('click', () => {
+      localStorage.removeItem(accountStorageKey);
+      renderAccount();
+      signInBtn.focus();
+    });
+
+    authForm.addEventListener('submit', saveAccount);
+    authCancel.addEventListener('click', closeAuth);
+
+    authOverlay.addEventListener('click', (event) => {
+      if (event.target === authOverlay) closeAuth();
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('#accountWrap')) {
+        accountMenu.classList.remove('visible');
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        closeAuth();
+        accountMenu.classList.remove('visible');
+      }
+    });
+
+    function getSuggestions(query) {
+      if (!query) return [];
+      const q = query.toLowerCase();
+      const firstChar = q[0];
+      const pool = suggestionMap[firstChar] || [];
+      return pool.filter(s => s.startsWith(q)).slice(0, 8);
+    }
+
+    function boldMatch(text, query) {
+      const q = query.toLowerCase();
+      if (!text.startsWith(q)) return text;
+      return `<b>${text.slice(0, q.length)}</b><em>${text.slice(q.length)}</em>`;
+    }
+
+    function renderSuggestions(query) {
+      kbIndex = -1;
+      currentItems = getSuggestions(query);
+      if (!currentItems.length || !query) {
+        suggestionsEl.classList.remove('visible');
+        box.classList.remove('focused');
+        box.classList.add('no-suggestions');
+        return;
+      }
+
+      box.classList.add('focused');
+      box.classList.remove('no-suggestions');
+      suggestionsEl.innerHTML = `
+        <div class="suggestion-divider"></div>
+        ${currentItems.map((item, i) => `
+          <div class="suggestion-item" data-index="${i}" onmousedown="selectSuggestion('${item}')">
+            ${searchIcon}
+            <span class="suggestion-text">${boldMatch(item, query)}</span>
+            ${arrowIcon}
+          </div>
+        `).join('')}
+      `;
+      suggestionsEl.classList.add('visible');
+    }
+
+    function highlightSuggestion(index) {
+      const items = suggestionsEl.querySelectorAll('.suggestion-item');
+      items.forEach(el => el.classList.remove('kb-selected'));
+      if (index >= 0 && index < items.length) {
+        items[index].classList.add('kb-selected');
+      }
+    }
+
+    function selectSuggestion(val) {
+      input.value = val;
+      updateClearBtn();
+      hideSuggestions();
+      doSearch();
+    }
+
+    function hideSuggestions() {
+      suggestionsEl.classList.remove('visible');
+      box.classList.remove('focused');
+      kbIndex = -1;
+    }
+
+    // ── Clear button logic ──
+    function updateClearBtn() {
+      if (input.value.trim().length > 0) {
+        clearBtn.classList.add('visible');
+      } else {
+        clearBtn.classList.remove('visible');
+      }
+    }
+
+    clearBtn.addEventListener('click', () => {
+      input.value = '';
+      updateClearBtn();
+      hideSuggestions();
+      input.focus();
+    });
+
+    input.addEventListener('input', () => {
+      updateClearBtn();
+      renderSuggestions(input.value.trim());
+    });
+
+    input.addEventListener('focus', () => {
+      if (input.value.trim()) renderSuggestions(input.value.trim());
+    });
+
+    input.addEventListener('blur', () => {
+      setTimeout(hideSuggestions, 150);
+    });
+
+    // ── Keyboard navigation ──
+    input.addEventListener('keydown', (e) => {
+      const visible = suggestionsEl.classList.contains('visible');
+
+      if (e.key === 'ArrowDown' && visible) {
+        e.preventDefault();
+        kbIndex = (kbIndex + 1) % currentItems.length;
+        highlightSuggestion(kbIndex);
+        input.value = currentItems[kbIndex];
+        updateClearBtn();
+      } else if (e.key === 'ArrowUp' && visible) {
+        e.preventDefault();
+        kbIndex = kbIndex <= 0 ? currentItems.length - 1 : kbIndex - 1;
+        highlightSuggestion(kbIndex);
+        input.value = currentItems[kbIndex];
+        updateClearBtn();
+      } else if (e.key === 'Enter') {
+        hideSuggestions();
+        doSearch();
+      } else if (e.key === 'Escape') {
+        hideSuggestions();
+      }
+    });
+
+    function doSearch() {
+      const q = input.value.trim();
+      if (q) {
+        window.open('https://www.google.com/search?q=' + encodeURIComponent(q), '_blank');
+      }
+    }
+
+    function feelingLucky() {
+      const q = input.value.trim() || 'Google';
+      window.open('https://www.google.com/search?q=' + encodeURIComponent(q) + '&btnI=1', '_blank');
+    }
+
+    // ── Dark Mode Toggle ──
+    const darkToggle = document.getElementById('darkToggle');
+    const darkIconEl = document.getElementById('darkIcon');
+    const moonPath = 'M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8A9.04 9.04 0 0 0 12 3z';
+    const sunPath = 'M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0-4a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V4a1 1 0 0 1 1-1zm0 17a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1a1 1 0 0 1 1-1zm9-9a1 1 0 0 1-1 1h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zM5 12a1 1 0 0 1-1 1H3a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zm13.36-5.64a1 1 0 0 1 0 1.41l-.7.71a1 1 0 1 1-1.42-1.42l.71-.7a1 1 0 0 1 1.41 0zM7.76 16.24a1 1 0 0 1 0 1.41l-.71.71a1 1 0 1 1-1.41-1.41l.7-.71a1 1 0 0 1 1.42 0zm10.48 0a1 1 0 0 1 0 1.41l.71.71a1 1 0 0 0 1.41-1.41l-.7-.71a1 1 0 0 0-1.42 0zM7.76 7.76a1 1 0 0 1-1.41 0l-.71-.71A1 1 0 0 1 7.05 5.64l.71.71a1 1 0 0 1 0 1.41z';
+
+    let isDark = localStorage.getItem('google-clone-dark') === 'true';
+    if (isDark) {
+      document.body.classList.add('dark-mode');
+      darkIconEl.querySelector('path').setAttribute('d', sunPath);
+    }
+
+    darkToggle.addEventListener('click', () => {
+      isDark = !isDark;
+      document.body.classList.toggle('dark-mode', isDark);
+      darkIconEl.querySelector('path').setAttribute('d', isDark ? sunPath : moonPath);
+      localStorage.setItem('google-clone-dark', isDark);
+    });
+
+    // ── Animated Logo ──
+    const logoSpans = document.querySelectorAll('.logo span');
+    const logoEl = document.querySelector('.logo');
+
+    logoEl.addEventListener('click', () => {
+      logoSpans.forEach((span, i) => {
+        span.style.transition = 'none';
+        span.style.transform = 'translateY(0)';
+        // trigger reflow
+        span.offsetHeight;
+        span.style.transition = `transform 0.5s cubic-bezier(.34,1.56,.64,1) ${i * 0.06}s`;
+        span.style.transform = 'translateY(-20px)';
+        setTimeout(() => {
+          span.style.transform = 'translateY(0)';
+        }, 300 + i * 60);
+      });
+    });
+
+    // ── Clock Widget ──
+    const clockTimeEl = document.getElementById('clockTime');
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      clockTimeEl.textContent = `${h}:${m}:${s}`;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+    renderAccount();
+  </script>
+
+</body>
+</html>
